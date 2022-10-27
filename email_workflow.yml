@@ -1,0 +1,29 @@
+version: 3
+type: conversation
+steps:
+  - id: email
+    type: input
+    value_type: text
+    prompt: "what is your email address?"
+  - id: validate_email
+    type: action
+    action:
+      store: email_checker
+      name: validate
+      parameters: ${email}
+  - id: cond
+    type: condition
+    if:
+      arg: ${validate_email}
+      is: equals
+      arg2: "true"
+      then: valid
+      else: invalid
+  - id: valid
+    type: message
+    prompt: "address ${email} is valid"
+  - id: exit
+    type: exit
+  - id: invalid
+    type: message
+    prompt: "address ${email} is invalid"
